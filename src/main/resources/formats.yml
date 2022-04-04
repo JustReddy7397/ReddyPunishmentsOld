@@ -9,5 +9,41 @@
 # FORMATS.YML - This is where you change the formats of the ban screen, mute screen, kick screen and more!
 #
 
+# Placeholders:
+# %time% - Gets the remaining time from a ban, for example: 3 Day(s) 1 Hour(s) 3 Minute(s) 1 Second(s) or Permanent if its a permanent ban
+# %reason% - Shows the reason why the user was banned
+# %banner% - Shows who banned the user
+# %muter% - Shows who muted the user
+# %kicker% - Shows who kicked the user
+# %date% - Shows the date of the ban
+# Note: Not all placeholders work in every message, and you don't have to use every placeholder in any message
+# Another Note: All lists are fully configurable, delete and add how many rows u want to
+
 # DO NOT TOUCH THIS
 config-version: 1
+
+ban:
+  tempban-time: "&e%days% &3Day(s) &e%hours% &3Hour(s) &e%minutes% &3Minute(s) &e%seconds% &3Second(s)"
+  permanent-time: "&3Permanent"
+  ban-screen-format: |-
+    &7[&cReddyPunishments&7]
+    &cYou are &4&lBanned
+    &7Time Remaining: %time%
+    &7Reason: &3%reason%
+    &7Appeal your ban at &3forum.example.com/appeal
+
+mute:
+  tempmute-time: "&e%days% &3Day(s) &e%hours% &3Hour(s) &e%minutes% &3Minute(s) &e%seconds% &3Second(s)"
+  permanent-time: "&3Permanent"
+  mute-screen-format: |-
+    &7[&cReddyPunishments&7]
+    &cYou are &4&lMUTED
+    &7Time Remaining: %time%
+    &7Reason: &3%reason%
+    &7Appeal your mute at &3forum.example.com/appeal
+
+kick:
+  kick-screen-format: |-
+    &7[&cReddyPunishments&7]
+    &cYou got &4&lKICKED
+    &7Reason: &3%reason%

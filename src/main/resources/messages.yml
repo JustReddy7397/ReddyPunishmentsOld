@@ -13,4 +13,48 @@ config-version: 1
 
 prefix: "&c[&4ReddyPunishments&c] "
 
-incorrect-usage: "%usage%"
+incorrect-usage: "&cInvalid usage! &c%syntax%"
+
+# Only sends the punishment message to the people with the silent see permission
+# %player% - The player who got banned
+# %moderator% - The player who banned
+# %type% - The type of the punishment ( Banned, Muted, Warned )
+silent: "&7[Silent] &c%player% has been %type% by %moderator%"
+
+# Only sends the punishment message to the people with the silent see permission
+# %player% - The player who got banned
+# %moderator% - The player who banned
+# %time% - The time of the temp punishment
+# %type% - The type of the punishment ( Banned, Muted, Warned )
+silent-temp: "&7[Silent] &c%player% has been %type% by %moderator% for %time%"
+
+# Sends the punishment message to everyone that is online
+# %player% - The player who got banned
+# %moderator% - The player who banned
+# %type% - The type of the punishment ( Banned, Muted, Warned )
+global: "&c%player% has been banned by %moderator%"
+
+# Sends the punishment message to everyone that is online
+# %player% - The player who got banned
+# %moderator% - The player who banned
+# %time% - The time of the temp punishment
+# %type% - The type of the punishment ( Banned, Muted, Warned )
+global-temp: "&c%player% has been %type% by %moderator% for %time%"
+
+# Only sends the unban message to the people with the silent see permission
+# %player% - The player who got unbanned
+# %moderator% - The player who unbanned
+unban-silent: "&7[Silent] &c%player% has been unbanned by %moderator%"
+
+# Only sends the unban message to everyone that is online
+# %player% - The player who got unbanned
+# %moderator% - The player who unbanned
+unban-global: "&c%player% has been unbanned by %moderator%"
+
+# The message when the player you're trying to ban is already banned
+# %player% - The player who is banned
+already-banned: "&c%player% is already banned"
+
+# The message when the player you're trying to unban is not banned
+# %player% - The player who is banned
+not-banned: "&c%player% is not banned"

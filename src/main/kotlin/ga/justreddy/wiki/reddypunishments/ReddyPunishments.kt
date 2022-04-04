@@ -1,14 +1,16 @@
 package ga.justreddy.wiki.reddypunishments
 
 import com.github.helpfuldeer.commandlib.CommandLib
+import ga.justreddy.wiki.reddypunishments.events.EventManager
 import ga.justreddy.wiki.reddypunishments.helper.PluginHelper
 import ga.justreddy.wiki.reddypunishments.helper.UpdateCheckerHelper
 import ga.justreddy.wiki.reddypunishments.helper.config.ConfigHelper
 import ga.justreddy.wiki.reddypunishments.helper.database.DatabaseHelper
 import ga.justreddy.wiki.reddypunishments.helper.database.MongoHelper
+import ga.justreddy.wiki.reddypunishments.helper.database.databaseHelper
 import ga.justreddy.wiki.reddypunishments.helper.dependency.DependencyHelper
+import ga.justreddy.wiki.reddypunishments.menu.MenuEvent
 import ga.justreddy.wiki.reddypunishments.utils.Utils
-import org.bukkit.Bukkit
 import org.bukkit.configuration.InvalidConfigurationException
 import java.io.IOException
 import java.util.*
@@ -56,12 +58,16 @@ class ReddyPunishments : PluginHelper() {
         Utils.sendConsole(
             "&aReddyPunishments v${getPluginVersion()} by ${getPluginAuthor()} enabled in ${(System.currentTimeMillis() - startTime)}ms."
         )
+        server.pluginManager.registerEvents(MenuEvent(), this)
+        server.pluginManager.registerEvents(EventManager(), this)
 
     }
 
 
     override fun onDisable() {
-
+        if(databaseHelper.isConnected()) {
+            databaseHelper.closeConnection()
+        }
     }
 
     private fun loadFiles(): Boolean {
@@ -156,7 +162,7 @@ class ReddyPunishments : PluginHelper() {
             if(updateChecker.getResult() == UpdateCheckerHelper.Result.OUTDATED) {
                 Utils.sendConsole(
                     "&2%line%",
-                    "&aA never version of ${getPluginName()} is available!",
+                    "&aA newer version of ${getPluginName()} is available!",
                     "&aCurrent: ${getPluginVersion()}",
                     "&aNew: ${updateChecker.latestVersion}",
                     "&aGet the update here: https://spigotmc.org",

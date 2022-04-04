@@ -11,3 +11,6 @@
 
 # DO NOT TOUCH THIS
 config-version: 1
+
+# Whether the punishment messages should be
+silent: true

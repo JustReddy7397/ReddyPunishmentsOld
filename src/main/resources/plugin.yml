@@ -6,6 +6,14 @@ authors:
 commands:
   ban:
     description: ban
+  history:
+    description: hi
+    aliases:
+      - hist
+  unban:
+    description: unban
+  tempban:
+    description: tempban
 runtime-libraries:
   relocation-prefix: 'ga.justreddy.wiki.reddypunishments.libs'
   libraries-folder: 'libs'
@@ -41,7 +49,7 @@ runtime-libraries:
     xseries:
       groupId: "com.github.cryptomorin"
       artifactId: "XSeries"
-      version: 8.6.1
+      version: 8.7.0
     reflections:
       groupId: "org.reflections"
       artifactId: "reflections"

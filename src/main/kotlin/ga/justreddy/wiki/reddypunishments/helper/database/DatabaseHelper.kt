@@ -10,8 +10,6 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 
 
-
-
 private lateinit var connection: Connection
 
 lateinit var databaseHelper: DatabaseHelper
@@ -25,11 +23,29 @@ class DatabaseHelper {
     fun connectH2() {
 
         try {
+            /*
+             MySQL.con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS BannedPlayers
+             (NAME VARCHAR(100),UUID VARCHAR(100),END VARCHAR(100),REASON VARCHAR(100),BANNER VARCHAR(100) )");
+*/
             Class.forName("org.h2.Driver");
             connection = DriverManager.getConnection("jdbc:h2:${plugin.dataFolder.absolutePath}/data/database.db");
-        }catch (ex: SQLException) {
+            update("CREATE TABLE IF NOT EXISTS bans (UUID VARCHAR(100)," +
+                    " MODERATOR VARCHAR(100)," +
+                    " NAME VARCHAR(100)," +
+                    " END VARCHAR(100)," +
+                    " REASON VARCHAR(100)," +
+                    "DATE LONG(100)," +
+                    "ACTIVE VARCHAR(100))")
+            update("CREATE TABLE IF NOT EXISTS mutes (UUID VARCHAR(100)," +
+                    " MODERATOR VARCHAR(100)," +
+                    " NAME VARCHAR(100)," +
+                    " END VARCHAR(100)," +
+                    "REASON VARCHAR(100)," +
+                    "DATE LONG(100)," +
+                    "ACTIVE VARCHAR(100))")
+        } catch (ex: SQLException) {
             Utils.error(ex, "There was an error connecting to the H2 database", true)
-        }catch (ex: ClassNotFoundException){
+        } catch (ex: ClassNotFoundException) {
             Utils.error(ex, "There was an error connecting to the H2 database", true)
         }
 
@@ -39,13 +55,27 @@ class DatabaseHelper {
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://$host:$port/$database", username, password);
-        }catch (ex: SQLException) {
+            update("CREATE TABLE IF NOT EXISTS bans (UUID VARCHAR(100)," +
+                    " MODERATOR VARCHAR(100)," +
+                    " NAME VARCHAR(100)," +
+                    " END VARCHAR(100)," +
+                    " REASON VARCHAR(100)," +
+                    " DATE LONG(100)," +
+                    " ACTIVE VARCHAR(100))")
+            update("CREATE TABLE IF NOT EXISTS mutes (UUID VARCHAR(100)," +
+                    " MODERATOR VARCHAR(100)," +
+                    " NAME VARCHAR(100)," +
+                    " END VARCHAR(100)," +
+                    " REASON VARCHAR(100)," +
+                    " DATE LONG(100)," +
+                    " ACTIVE VARCHAR(100))")
+        } catch (ex: SQLException) {
             Utils.error(ex, "There was an error connecting to the MySQL database", true)
         }
 
     }
 
-    private fun isConnected(): Boolean {
+    fun isConnected(): Boolean {
         return connection != null
     }
 
@@ -88,12 +118,8 @@ class DatabaseHelper {
         }
     }
 
-    companion object {
-        fun getConnection() : Connection {
-            return connection
-        }
-
+    fun getConnection(): Connection {
+        return connection
     }
-
 
 }
