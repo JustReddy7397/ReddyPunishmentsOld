@@ -10,6 +10,7 @@ import ga.justreddy.wiki.reddypunishments.helper.database.MongoHelper
 import ga.justreddy.wiki.reddypunishments.helper.database.databaseHelper
 import ga.justreddy.wiki.reddypunishments.helper.dependency.DependencyHelper
 import ga.justreddy.wiki.reddypunishments.menu.MenuEvent
+import ga.justreddy.wiki.reddypunishments.tasks.ModerationTask
 import ga.justreddy.wiki.reddypunishments.utils.Utils
 import org.bukkit.configuration.InvalidConfigurationException
 import java.io.IOException
@@ -33,7 +34,6 @@ class ReddyPunishments : PluginHelper() {
     var isBungecoordEnabled: Boolean = false
 
     private val databaseTypes = arrayOf("mongodb", "sql", "mysql")
-
 
     override fun onLoad() {
         DependencyHelper()
@@ -60,7 +60,7 @@ class ReddyPunishments : PluginHelper() {
         )
         server.pluginManager.registerEvents(MenuEvent(), this)
         server.pluginManager.registerEvents(EventManager(), this)
-
+        ModerationTask().runTaskTimerAsynchronously(this, 0, 20L)
     }
 
 
@@ -79,6 +79,7 @@ class ReddyPunishments : PluginHelper() {
                 Utils.error(null, "Outdated formats.yml file.", true);
                 return false;
             }
+            logger.info("Loaded file: $currentlyLoading")
 
             currentlyLoading = "messages.yml"
             messagesFile = ConfigHelper(currentlyLoading)
@@ -87,6 +88,8 @@ class ReddyPunishments : PluginHelper() {
                 return false
             }
 
+            logger.info("Loaded file: $currentlyLoading")
+
             currentlyLoading = "settings.yml"
             settingsFile = ConfigHelper(currentlyLoading)
             if (settingsFile.isOutdated(SETTINGS_VERSION)) {
@@ -94,12 +97,16 @@ class ReddyPunishments : PluginHelper() {
                 return false;
             }
 
+            logger.info("Loaded file: $currentlyLoading")
+
             currentlyLoading = "database.yml"
             databaseFile = ConfigHelper(currentlyLoading)
             if (databaseFile.isOutdated(DATABASE_VERSION)) {
                 Utils.error(null, "Outdated database.yml file.", true);
                 return false;
             }
+
+            logger.info("Loaded file: $currentlyLoading")
 
         } catch (ex: IOException) {
             Utils.error(ex, "Failed to load $currentlyLoading.", true)
@@ -179,6 +186,12 @@ class ReddyPunishments : PluginHelper() {
 
     }
 
+    fun reloadFiles() {
+        formatsFile.reload()
+        messagesFile.reload()
+        settingsFile.reload()
+    }
+
     override fun getPluginVersion(): String {
         return description.version
     }
@@ -194,5 +207,6 @@ class ReddyPunishments : PluginHelper() {
     override fun getPluginAuthor(): String? {
         return description.authors[0]
     }
+
 
 }

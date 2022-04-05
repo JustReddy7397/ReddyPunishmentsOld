@@ -3,39 +3,45 @@ package ga.justreddy.wiki.reddypunishments.commands
 import com.github.helpfuldeer.commandlib.BaseCommand
 import com.github.helpfuldeer.commandlib.SuperCommand
 import ga.justreddy.wiki.reddypunishments.helper.moderation.BanHelper
+import ga.justreddy.wiki.reddypunishments.helper.moderation.MuteHelper
 import ga.justreddy.wiki.reddypunishments.messagesFile
-import ga.justreddy.wiki.reddypunishments.plugin
 import ga.justreddy.wiki.reddypunishments.utils.Utils
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 
 @SuperCommand(
-    name = "unban",
-    description = "Unban a player",
-    syntax = "/unban <player> [-s (silent)]",
-    permission = "reddypunishments.command.unban"
+    name = "tempmute",
+    description = "Tempmute a player",
+    syntax = "/tempmute <player> <time> [-s (silent)] [reason]",
+    permission = "reddypunishments.command.tempmute",
+    playersOnly = false,
 )
-class UnbanCommand : BaseCommand() {
+class TempmuteCommand : BaseCommand() {
 
     override fun run(sender: CommandSender, args: Array<out String>) {
+
         try{
             val player = Bukkit.getOfflinePlayer(args[0])
+            val durationMS: Long = Utils.getDurationMS(args[1])
+            val durationStr: String = Utils.getDurationString(args[1])
+            var reason = "No Reason Given"
             var silent = false
-
-            // This will never get used
-            var placeholderMessage = ""
-            for (i in 1 until args.size) {
-                placeholderMessage = placeholderMessage + args[i] + " "
+            for (i in 2 until args.size) {
+                reason = reason.replace("No Reason Given", "") + args[i] + " "
             }
 
-            if(placeholderMessage.contains("-s")){
-                placeholderMessage = placeholderMessage.replace("-s ", "")
+            if(reason.contains("-s")){
+                reason = reason.replace("-s ", "")
                 silent = true
             }
 
-            BanHelper.getHelper().unban(player, sender, silent)
+            if(silent) {
+                MuteHelper.getHelper().mute(player, sender, durationStr, durationMS, true, reason)
+            }else{
+                MuteHelper.getHelper().mute(player, sender, durationStr, durationMS, reason)
+            }
 
-        }catch (e: IndexOutOfBoundsException) {
+        }catch (ex: IndexOutOfBoundsException) {
             sender.sendMessage(tellInvalidArguments())
         }
     }
@@ -43,6 +49,7 @@ class UnbanCommand : BaseCommand() {
     override fun tellInvalidArguments(): String {
         return Utils.format(messagesFile.config?.getString("incorrect-usage")!!.replace("%prefix%", messagesFile.config!!.getString("prefix")).replace("%syntax%", superCommand.syntax))
     }
+
     override fun tellInvalidPerms(): String {
         return Utils.format(
             messagesFile.config!!.getString("invalid-permission")!!

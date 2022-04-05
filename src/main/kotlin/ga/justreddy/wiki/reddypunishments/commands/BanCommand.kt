@@ -2,8 +2,11 @@ package ga.justreddy.wiki.reddypunishments.commands
 
 import com.github.helpfuldeer.commandlib.BaseCommand
 import com.github.helpfuldeer.commandlib.SuperCommand
+import ga.justreddy.wiki.reddypunishments.ReddyPunishments
 import ga.justreddy.wiki.reddypunishments.helper.moderation.BanHelper
 import ga.justreddy.wiki.reddypunishments.messagesFile
+import ga.justreddy.wiki.reddypunishments.plugin
+import ga.justreddy.wiki.reddypunishments.utils.Utils
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
@@ -14,7 +17,7 @@ import java.util.*
     description = "Ban a player",
     syntax = "/ban <player> [-s (silent)] [reason]",
     permission = "reddypunishments.command.ban",
-    playersOnly = false,
+    playersOnly = false
 )
 class BanCommand : BaseCommand() {
 
@@ -41,13 +44,21 @@ class BanCommand : BaseCommand() {
             }
 
         }catch (e: IndexOutOfBoundsException) {
-            tellInvalidArguments(sender, messagesFile.config?.getString("incorrect-usage"))
+            sender.sendMessage(tellInvalidArguments())
         }
-
-
 
     }
 
+    override fun tellInvalidArguments(): String {
+        return Utils.format(messagesFile.config?.getString("incorrect-usage")!!.replace("%prefix%", messagesFile.config!!.getString("prefix")).replace("%syntax%", superCommand.syntax))
+    }
 
+    override fun tellInvalidPerms(): String {
+        return Utils.format(messagesFile.config!!.getString("invalid-permission")!!.replace("%prefix%", messagesFile.config!!.getString("prefix")))
+    }
+
+    override fun tellPlayersOnly(): String {
+        return Utils.format(messagesFile.config!!.getString("players-only")!!.replace("%prefix%", messagesFile.config!!.getString("prefix")))
+    }
 
 }

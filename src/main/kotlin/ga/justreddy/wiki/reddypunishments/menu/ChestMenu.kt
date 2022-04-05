@@ -44,7 +44,7 @@ abstract class ChestMenu(menuName: String, size: Int) : InventoryHolder {
         return inv
     }
 
-    fun setMenuItems() {
+    fun setFillerGlass() {
         for (i in 0 until size) {
             if (inventory.getItem(i) == null) {
                 inventory.setItem(i, FILLER_GLASS)

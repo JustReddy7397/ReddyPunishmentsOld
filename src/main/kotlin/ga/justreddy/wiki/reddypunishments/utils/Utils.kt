@@ -3,6 +3,7 @@ package ga.justreddy.wiki.reddypunishments.utils
 import ga.justreddy.wiki.reddypunishments.plugin
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
@@ -13,15 +14,15 @@ class Utils {
 
      companion object {
 
-         val CHAT_LINE: String = "&m-----------------------------------------------------"
-         val CONSOLE_LINE: String = "*-----------------------------------------------------*"
-         val LORE_LINE: String = "&m--------------------------"
+         const val CHAT_LINE: String = "&m-----------------------------------------------------"
+         const val CONSOLE_LINE: String = "*-----------------------------------------------------*"
+         const val LORE_LINE: String = "&m--------------------------"
 
         fun format(@NotNull msg: String) : String {
             return ChatColor.translateAlternateColorCodes('&', msg);
         }
 
-        fun formatList(@Nullable list: MutableList<String>) : MutableList<String> {
+        fun formatList(@NotNull list: MutableList<String>) : MutableList<String> {
             val lines: MutableList<String> = ArrayList()
 
             for(line: String in list) {
@@ -30,13 +31,13 @@ class Utils {
             return lines
         }
 
-         fun sendMessage(player: Player, message: String) {
-             player.sendMessage(format(message.replace("%line%", CHAT_LINE)))
+         fun sendMessage(sender: CommandSender, message: String) {
+             sender.sendMessage(format(message.replace("%line%", CHAT_LINE)))
          }
 
-         fun sendMessage(player: Player, vararg message: String) {
+         fun sendMessage(sender: CommandSender, vararg message: String) {
              for(line: String in message) {
-                 sendMessage(player, line)
+                 sendMessage(sender, line)
              }
          }
 

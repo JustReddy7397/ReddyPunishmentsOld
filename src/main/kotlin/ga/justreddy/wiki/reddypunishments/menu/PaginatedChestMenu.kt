@@ -73,6 +73,9 @@ abstract class PaginatedChestMenu(menuName: String, size: Int) : ChestMenu(menuN
                 }
                 return
             }
+            36 -> {
+
+            }
         }
 
 

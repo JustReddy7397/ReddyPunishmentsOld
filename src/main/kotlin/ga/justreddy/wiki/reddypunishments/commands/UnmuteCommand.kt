@@ -3,19 +3,19 @@ package ga.justreddy.wiki.reddypunishments.commands
 import com.github.helpfuldeer.commandlib.BaseCommand
 import com.github.helpfuldeer.commandlib.SuperCommand
 import ga.justreddy.wiki.reddypunishments.helper.moderation.BanHelper
+import ga.justreddy.wiki.reddypunishments.helper.moderation.MuteHelper
 import ga.justreddy.wiki.reddypunishments.messagesFile
-import ga.justreddy.wiki.reddypunishments.plugin
 import ga.justreddy.wiki.reddypunishments.utils.Utils
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 
 @SuperCommand(
-    name = "unban",
-    description = "Unban a player",
-    syntax = "/unban <player> [-s (silent)]",
-    permission = "reddypunishments.command.unban"
+    name = "unmute",
+    description = "Unmute a player",
+    syntax = "/unmute <player> [-s (silent)]",
+    permission = "reddypunishments.command.unmute"
 )
-class UnbanCommand : BaseCommand() {
+class UnmuteCommand : BaseCommand() {
 
     override fun run(sender: CommandSender, args: Array<out String>) {
         try{
@@ -33,7 +33,7 @@ class UnbanCommand : BaseCommand() {
                 silent = true
             }
 
-            BanHelper.getHelper().unban(player, sender, silent)
+            MuteHelper.getHelper().unmute(player, sender, silent)
 
         }catch (e: IndexOutOfBoundsException) {
             sender.sendMessage(tellInvalidArguments())
@@ -43,6 +43,7 @@ class UnbanCommand : BaseCommand() {
     override fun tellInvalidArguments(): String {
         return Utils.format(messagesFile.config?.getString("incorrect-usage")!!.replace("%prefix%", messagesFile.config!!.getString("prefix")).replace("%syntax%", superCommand.syntax))
     }
+
     override fun tellInvalidPerms(): String {
         return Utils.format(
             messagesFile.config!!.getString("invalid-permission")!!

@@ -13,38 +13,42 @@ config-version: 1
 
 prefix: "&c[&4ReddyPunishments&c] "
 
-incorrect-usage: "&cInvalid usage! &c%syntax%"
+invalid-permission: "%prefix% &cYou don't have the required permission to run this command"
+
+reload: "%prefix% &aSuccessfully reloaded the config files"
+
+incorrect-usage: "%prefix% &cInvalid usage! &c%syntax%"
 
 # Only sends the punishment message to the people with the silent see permission
 # %player% - The player who got banned
 # %moderator% - The player who banned
 # %type% - The type of the punishment ( Banned, Muted, Warned )
-silent: "&7[Silent] &c%player% has been %type% by %moderator%"
+silent: "&7[Silent] &c%player% &ahas been &l%type% by &c&l%moderator%"
 
 # Only sends the punishment message to the people with the silent see permission
 # %player% - The player who got banned
 # %moderator% - The player who banned
 # %time% - The time of the temp punishment
 # %type% - The type of the punishment ( Banned, Muted, Warned )
-silent-temp: "&7[Silent] &c%player% has been %type% by %moderator% for %time%"
+silent-temp: "&7[Silent] &c%player% &ahas been &l%type% by &c&l%moderator% &afor %time%"
 
 # Sends the punishment message to everyone that is online
 # %player% - The player who got banned
 # %moderator% - The player who banned
 # %type% - The type of the punishment ( Banned, Muted, Warned )
-global: "&c%player% has been banned by %moderator%"
+global: "&c%player% &ahas been &l%type% by &c&l%moderator%"
 
 # Sends the punishment message to everyone that is online
 # %player% - The player who got banned
 # %moderator% - The player who banned
 # %time% - The time of the temp punishment
 # %type% - The type of the punishment ( Banned, Muted, Warned )
-global-temp: "&c%player% has been %type% by %moderator% for %time%"
+global-temp: "&c%player% &ahas been &l%type% by &c&l%moderator% &afor %time%"
 
 # Only sends the unban message to the people with the silent see permission
 # %player% - The player who got unbanned
 # %moderator% - The player who unbanned
-unban-silent: "&7[Silent] &c%player% has been unbanned by %moderator%"
+unban-silent: "&7[Silent] &c%player% &ahas been unbanned by &c&l%moderator%"
 
 # Only sends the unban message to everyone that is online
 # %player% - The player who got unbanned
@@ -53,8 +57,24 @@ unban-global: "&c%player% has been unbanned by %moderator%"
 
 # The message when the player you're trying to ban is already banned
 # %player% - The player who is banned
-already-banned: "&c%player% is already banned"
+already-banned: "&c&l%player% is already banned"
 
 # The message when the player you're trying to unban is not banned
 # %player% - The player who is banned
-not-banned: "&c%player% is not banned"
+not-banned: "&c&l%player% &cis not banned"
+
+not-muted: "&c&l%player% &cis not banned"
+
+# Only sends the unmute message to the people with the silent see permission
+# %player% - The player who got unmuted
+# %moderator% - The player who unmuted
+unmute-silent: "&7[Silent] &c%player% &ahas been unmuted by &c&l%moderator%"
+
+# Only sends the unmute message to everyone that is online
+# %player% - The player who got unmuted
+# %moderator% - The player who unmuted
+unmute-global: "&c%player% has been unmuted by %moderator%"
+
+# The message when the player you're trying to mute is already banned
+# %player% - The player who is muted
+already-muted: "&c&l%player% is already muted"
